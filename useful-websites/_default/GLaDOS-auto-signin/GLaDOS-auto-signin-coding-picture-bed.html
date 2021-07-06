@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>GLaDOS &#x81EA;&#x52A8;&#x7B7E;&#x5230;</title>
+        <style>
+/* From extension marp-team.marp-vscode */
+#marp-vscode {
+  all: initial;
+}
+
+/* Override VS Code default CSS rules reverting to initial
+   https://github.com/microsoft/vscode/blob/master/src/vs/workbench/contrib/webview/browser/pre/main.js#L53 */
+body.marp-vscode {
+  padding: 0;
+}
+
+body.marp-vscode img {
+  max-width: unset;
+  max-height: unset;
+}
+
+body.marp-vscode a,
+body.marp-vscode a:hover,
+body.marp-vscode code {
+  color: unset;
+}
+
+body.marp-vscode blockquote {
+  background: unset;
+  border-color: unset;
+}
+
+@media screen {
+  body.marp-vscode {
+    overflow-y: scroll;
+  }
+
+  #marp-vscode svg[data-marpit-svg] {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    display: block;
+    margin: 20px;
+  }
+
+  #marp-vscode[data-polyfill] svg[data-marpit-svg] > foreignobject > section {
+    /* Workaround for wrong hit area caused by Chromium's rendering bug */
+    overflow: visible;
+  }
+
+  /* Based on https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+  #code-csp-warning {
+    background-color: #444;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 22px;
+    margin: 16px;
+    padding: 6px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    word-wrap: break-word;
+  }
+
+  #code-csp-warning:hover {
+    text-decoration: none;
+    background-color: #007acc;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media print {
+  body.marp-vscode #code-csp-warning {
+    display: none;
+  }
+
+  #marp-vscode[data-polyfill] svg[data-marpit-svg] > foreignobject > section {
+    /* Disable WebKit polyfill */
+    transform: none !important;
+  }
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        <script type="text/javascript">
+/* From extension marp-team.marp-vscode */
+!function(){"use strict";var t,e=(function(t,e){Object.defineProperty(e,"__esModule",{value:!0});const r="marpitSVGPolyfill:setZoomFactor,",o=Symbol();let n,i;function l(t){const e="object"==typeof t&&t.target||document,l="object"==typeof t?t.zoom:t;window[o]||(Object.defineProperty(window,o,{configurable:!0,value:!0}),window.addEventListener("message",(({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(r)){const[,e]=t.split(","),r=Number.parseFloat(e);Number.isNaN(r)||(i=r)}}catch(t){console.error(t)}})));let a=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),(t=>{var e,r,o,s;t.style.transform||(t.style.transform="translateZ(0)");const c=l||i||t.currentScale||1;n!==c&&(n=c,a=c);const d=t.getBoundingClientRect(),{length:u}=t.children;for(let n=0;n<u;n+=1){const i=t.children[n],l=i.getScreenCTM();if(l){const t=null!==(r=null===(e=i.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==r?r:0,n=null!==(s=null===(o=i.y)||void 0===o?void 0:o.baseVal.value)&&void 0!==s?s:0,a=i.firstElementChild,{style:u}=a;u.transformOrigin||(u.transformOrigin=`${-t}px ${-n}px`),u.transform=`scale(${c}) matrix(${l.a}, ${l.b}, ${l.c}, ${l.d}, ${l.e-d.left}, ${l.f-d.top}) translateZ(0.0001px)`}}})),!1!==a&&Array.from(e.querySelectorAll("iframe"),(({contentWindow:t})=>{null==t||t.postMessage(`${r}${a}`,"null"===window.origin?"*":window.origin)}))}n=1,i=void 0;const a=(t,e,r)=>{if(t.getAttribute(e)!==r)return t.setAttribute(e,r),!0};function s({once:t=!1,target:e=document}={}){const r="Apple Computer, Inc."===navigator.vendor?[l]:[];let o=!t;const n=()=>{for(const t of r)t({target:e});!function(t=document){Array.from(t.querySelectorAll('svg[data-marp-fitting="svg"]'),(t=>{var e;const r=t.firstChild,o=r.firstChild,{scrollWidth:n,scrollHeight:i}=o;let l,s=1;if(t.hasAttribute("data-marp-fitting-code")&&(l=null===(e=t.parentElement)||void 0===e?void 0:e.parentElement),t.hasAttribute("data-marp-fitting-math")&&(l=t.parentElement),l){const t=getComputedStyle(l),e=Math.ceil(l.clientWidth-parseFloat(t.paddingLeft||"0")-parseFloat(t.paddingRight||"0"));e&&(s=e)}const c=Math.max(n,s),d=Math.max(i,1),u=`0 0 ${c} ${d}`;a(r,"width",`${c}`),a(r,"height",`${d}`),a(t,"preserveAspectRatio",getComputedStyle(t).getPropertyValue("--preserve-aspect-ratio")||"xMinYMin meet"),a(t,"viewBox",u)&&t.classList.toggle("__reflow__")}))}(e),o&&window.requestAnimationFrame(n)};return n(),()=>{o=!1}}const c=Symbol(),d=(t=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(t[c])return t[c];const e=s({target:t}),r=()=>{e(),delete t[c]};return Object.defineProperty(t,c,{configurable:!0,value:r}),r};e.browser=d,e.default=d,e.observer=s}(t={exports:{}},t.exports),t.exports);!function(){if(document.getElementById("marp-vscode")){document.body.classList.add("marp-vscode");const t=document.querySelectorAll("style:not(#marp-vscode-style):not(#_defaultStyles)"),r=document.querySelectorAll('link[rel="stylesheet"]:not([href*="marp-vscode"])');t.forEach((t=>t.remove())),r.forEach((t=>t.remove())),e.observer()}}()}();
+</script>
+
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="glados-自动签到">GLaDOS 自动签到</h1>
+<blockquote>
+<p>本文原链接：<a href="https://blog.csdn.net/weixin_37551036/article/details/115415358">https://blog.csdn.net/weixin_37551036/article/details/115415358</a></p>
+<p>YuSoLi: 我用的自动签到脚本和原作者使用的不是同一个。原作者的自动签到脚本有时会导致签到失败，因此不建议用原作者的那个。在此文章中，我已经把自动签到脚本的链接替换为我自己使用的那一个。因此只参考我这篇就行。</p>
+<p>请低调使用 😃</p>
+</blockquote>
+<h2 id="简介">简介</h2>
+<p>首次输入邀请码注册免费获得 3 天，绑定教育邮箱获得 360 天，每天签到获得 1 天。本文教大家如何通过脚本自动签到，并自动推送结果到微信上。每步都配了截图，小白也能做。</p>
+<h2 id="注册-glados">注册 GLaDOS</h2>
+<p>注册地址：</p>
+<p>在 <a href="https://github.com/glados-network/GLaDOS">https://github.com/glados-network/GLaDOS</a> 实时更新</p>
+<p>如果你有教育邮箱，可以拉到页面底部申请教育计划免费获得 360 天时长</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-10-42.png" alt="1"></p>
+<h2 id="fork-项目到自己的仓库">Fork 项目到自己的仓库</h2>
+<blockquote>
+<p>YuSoLi: 这个自动签到项目说每天上午9:30签到，但是我实测是上午10:30</p>
+</blockquote>
+<ol>
+<li>
+<p>打开 <a href="https://github.com/DullSword/GLaDOS-CheckIn">https://github.com/DullSword/GLaDOS-CheckIn</a></p>
+</li>
+<li>
+<p>在页面右上角点击 fork</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-11-30.png" alt="1"></p>
+</li>
+</ol>
+<h2 id="配置账户信息">配置账户信息</h2>
+<ol>
+<li>
+<p>添加 action cecrets</p>
+<p>如图所示点击 settings-secrets-new repository secret</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-11-55.png" alt="1"></p>
+</li>
+<li>
+<p>添加自己账户的信息</p>
+<p>这里需要分别添加三次：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Name</th>
+<th style="text-align:center">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SERVE</td>
+<td style="text-align:center">yes</td>
+</tr>
+<tr>
+<td style="text-align:center">COOKIE</td>
+<td style="text-align:center">你自己的 cookie（下一步会说明）</td>
+</tr>
+<tr>
+<td style="text-align:center">SCKEY</td>
+<td style="text-align:center">你自己的 sckey（下一步会说明）</td>
+</tr>
+</tbody>
+</table>
+<p>接下来会详细介绍如何获取 COOKIE 和 SCKEY</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-13-34.png" alt="1"></p>
+</li>
+<li>
+<p>获取 COOKIE</p>
+<p>登录 glados，按键盘上的 <code>F12</code> 打开开发者工具</p>
+<p>进入我的账户，刷新页面</p>
+<p>如图所示找到 cookie，把 cookie： 后面的几行都复制下来，填入上一步对应的 value 中</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-14-12.png" alt="1"></p>
+</li>
+<li>
+<p>获取 SCKEY</p>
+<p>这是在 server 酱中获取的，用于绑定微信，给你推送签到后的结果</p>
+<blockquote>
+<p>YuSoLi: 由于微信在2021年4月的调整，下面这种公众号推送的方式已经被微信禁用了。目前可用的是企业微信推送的方式。</p>
+<p>但是下文提到的<code>Server酱</code>如果使用企业微信，必须用<code>Server酱 Turbo版</code>。而此版本是收费的</p>
+<p><code>虾推啥</code>官网：<a href="http://www.xtuis.cn/">http://www.xtuis.cn/</a></p>
+<p><code>虾推啥</code>同样提供了企业微信推送，并且是免费的。推荐这个。官网有教程，与server酱差不多。使用的时候需要改一下自动签到脚本中文件<code>checkin.js</code>链接的api地址。这个地址在<code>虾推啥</code>的官网里可以找到，或者直接参考<a href="https://github.com/ysl2/GLaDOS-CheckIn">我的设置</a></p>
+</blockquote>
+<p>server 酱地址：<a href="http://sc.ftqq.com/3.version">http://sc.ftqq.com/3.version</a></p>
+<ul>
+<li>
+<p>用 github 账号登入</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-15-35.png" alt="1"></p>
+</li>
+<li>
+<p>扫码绑定微信</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-15-48.png" alt="1"></p>
+</li>
+<li>
+<p>复制 SCKEY</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-16-06.png" alt="1"></p>
+</li>
+</ul>
+<p>三个 secret 添加好后，就应该是这个样子：</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-16-24.png" alt="1"></p>
+</li>
+</ol>
+<h2 id="开启-action">开启 Action</h2>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-16-41.png" alt="1"></p>
+<p>选择 enable workflow</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-16-51.png" alt="1"></p>
+<h2 id="提交">提交</h2>
+<blockquote>
+<p>YuSoLi：</p>
+<p>这部分不要参考下文的“改<code>README.md</code>”，改了也没效果。只需要star一下你自己fork的仓库，就会开始action了</p>
+</blockquote>
+<p>此时已经开启了 action，代码中写的是每天凌晨 0 点左右或者每次提交代码时会触发签到行为。为了验证是否成功，我们随便修改一下代码并提交：
+点这个 <a href="http://readme.html">readme.md</a>（避免修改了不该修改的代码）</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-17-05.png" alt="1"></p>
+<p>点击这个笔进行编辑</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-17-15.png" alt="1"></p>
+<p>随便写点什么，修改这个文件是不会影响到代码的</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-17-25.png" alt="1"></p>
+<p>提交更改</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-17-38.png" alt="1"></p>
+<h2 id="验证结果">验证结果</h2>
+<p>点开 action，发现正在 update，当图标变成绿色 √ 的时候就执行完毕了</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-17-56.png" alt="1"></p>
+<p>打开微信看是否收到通知：</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-10-21-18-07.png" alt="1"></p>
+<p>自此就成功了，每天凌晨 12 点多都会自动签到的，不过 cookie 过段时间会失效，到时登录 github 手动更改一下 cookie 值就行。</p>
+<h2 id="感想">感想</h2>
+<ol>
+<li>白嫖真香</li>
+<li>第一次使用 github 的 action，还挺好用</li>
+<li>关于 server 酱：由于微信升级的原因到时可能会失效，具体可以看一下他的文档如何使用企业微信推送通知，这里不赘述了</li>
+</ol>
+
+    </body>
+    </html>

@@ -1,0 +1,2695 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <title>正则表达式引擎/风味对比</title>
+    <meta name="keywords" content="正则表达式, 正则表达式引擎">
+    <meta name="description" content="比较常见正则表达式引擎支持语法的异同，如 JavaScript, Perl, Java, .Net, Python等。">
+    <link rel="SHORTCUT ICON" href="../../images/regex.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style type="text/css">
+        body {
+            font-size: 100%;
+            padding: 0 5px;
+            margin: 0 3px;
+        }
+
+        article {
+            margin: 3px;
+            padding: 3px;
+        }
+
+        h1,
+        h2,
+        #meta {
+            text-align: center;
+        }
+
+        p {
+            text-indent: 2em;
+            line-height: 140%;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: solid 1px gray;
+            border-width: 1px 1px 0 0;
+            margin: 20px auto;
+        }
+
+        td,
+        th {
+            border: solid 1px gray;
+            border-width: 0 0 1px 1px;
+        }
+
+        #diffs td:not(:first-child) {
+            text-align: center;
+            color: green;
+        }
+
+        #diffs td.no {
+            color: red;
+        }
+
+        .hilight {
+            background-color: #ccc;
+        }
+
+        .regex {
+            font-family: "Courier New";
+        }
+
+        tbody tr:hover {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="topbar">
+    <link href="/css/topbar.css" rel="stylesheet">
+    <ul>
+        <li><a href="/">首页</a></li>
+        <li><a href="/blog/">博客</a></li>
+        <li><a href="/tools/">工具</a></li>
+        <li><a href="/projects/">项目</a></li>
+    </ul>
+
+    <div id="donation">
+        <donate-button direction="bottom" align="right"></donate-button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>window.Vue || document.write('<script src="/js/vue-2.6.10.min.js">\x3C/script>')</script>
+    <script src="/donation/donatebutton.umd.min.js"></script>
+    <script>
+        var db = new Vue({
+            el: '#donation'
+        });
+    </script>
+</div>
+
+    <article>
+        <h1>正则表达式引擎/风味对比</h1>
+        <p id="meta">更新时间：2019-11-27 允许转载 转载请注明<a href="https://deerchao.cn/tutorials/regex/diffs.html">来源</a></p>
+        <p>说明：本文内容翻译后整理自<a href="http://regular-expressions.mobi/refflavors.html">regular-expressions.mobi</a>。原网址只有使用手机浏览器才能正常访问。
+        </p>
+
+        <h2>正则表达式引擎/风味说明</h2>
+
+        <p>风味是规范，引擎是实现。</p>
+
+        <table id="flavors">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>说明</th>
+                    <th>应用</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-col="2">
+                    <th>.NET</th>
+                    <td>由 <a href="https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions"><code>System.Text.RegularExpressions</code>
+                            相关类</a> 提供的正则引擎。</td>
+                    <td>基于 .Net 的语言和软件。如 C#, Visual Basic.Net, F#, Powershell, Delphi for .NET 等。</td>
+                </tr>
+                <tr data-col="3">
+                    <th>Java</th>
+                    <td>由 <a href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/package-summary.html"><code>java.util.regex</code></a>
+                        包提供, 在 Java 4 (JDK 1.4.x) 及更新的版本中可用。在 Java 5 (JDK 1.5.x) 和 6 (JDK 1.6.x) 中添加了一些新功能。 </td>
+                    <td>基于 JVM 的语言和软件，如 Java, Clojure 等。</td>
+                </tr>
+                <tr data-col="4">
+                    <th>Perl</th>
+                    <td>内置于 Perl 的<a href="https://perldoc.perl.org/perlre.html">正则表达式引擎</a>，5.6 之前的版本不支持 Unicode。</td>
+                    <td>Perl 编程语言。</td>
+                </tr>
+                <tr data-col="5">
+                    <th>PCRE</th>
+                    <td>来自开源项目 <a href="https://www.pcre.org/">PCRE</a>的<a href="https://www.pcre.org/original/doc/html/pcrepattern.html">正则表达式引擎</a>。 本文介绍的功能在 PCRE
+                        5.x 和 6.x 中可用。</td>
+                    <td>REALbasic(Xojo) 语言；
+                        Delphi 组件 <code>TPerlRegEx</code> 和 Delphi XE 和 C++Builder XE 的单元
+                        <code>RegularExrpessions</code>
+                        和 <code>RegularExpressionsCore</code>；
+                        PHP 的 <code>preg</code> 函数；
+                        R 语言(<code>perl = true</code>)；
+                        COM 对象 Microsoft VBScript Regular Expressions 5.5。
+                    </td>
+                </tr>
+                <tr data-col="6">
+                    <th>JS(JavaScript)</th>
+                    <td>由 <a href="https://www.ecma-international.org/publications/standards/Ecma-262-arch.htm">ECMA-262
+                            标准</a><a href="https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf">第
+                            3 版</a>定义的脚本语言(ECMAScript)中的正则表达式语法。</td>
+                    <td>JavaScript 编程语言；VBScript 中的 <code>RegExp</code>；ClojureScript 编程语言。</td>
+                </tr>
+                <tr data-col="7">
+                    <th>Python</th>
+                    <td>由 Python 内置<a href="https://docs.python.org/3/library/re.html">模块 <code>re</code></a> 支持。</td>
+                    <td>Python 编程语言。</td>
+                </tr>
+                <tr data-col="8">
+                    <th>Ruby</th>
+                    <td>由 Ruby 内置的<a href="https://ruby-doc.org/core-2.6.4/Regexp.html">正则表达式引擎</a>。</td>
+                    <td>Ruby 编程语言。</td>
+                </tr>
+                <tr data-col="9">
+                    <th>Tcl ARE</th>
+                    <td>由 Henry Spencer 为 Tcl 8.2/8.4 中命令 <code>regexp</code> 开发，被称为<a href="https://wiki.tcl-lang.org/page/Regular+Expression">高级正则表达式(Advanced Regular
+                            Expressions,
+                            ARE)</a>。</td>
+                    <td>Tcl 编程语言；PostgreSQL 7.4 及更新版本；wxWidgets(<code>wxRE_ADVANCED</code>)。</td>
+                </tr>
+                <tr data-col="10">
+                    <th>POSIX BRE</th>
+                    <td>由 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/">IEEE POSIX 标准 1003</a> 定义的<a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03">基本正则表达式（Basic
+                            Regular Expressions）</a>。</td>
+                    <td>Unix 上的软件工具；R 语言(<code>perl = false, extended = false</code>)；Tcl的 基本风味（Extended Regular
+                        Expressions），wxWidgets(<code>wxRE_BASIC</code>)。</td>
+                </tr>
+                <tr data-col="11">
+                    <th>POSIX ERE</th>
+                    <td>由 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/">IEEE POSIX 标准 1003</a> 定义的<a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_04">扩展正则表达式（Extended
+                            Regular Expressions）</a>。</td>
+                    <td>Unix 上的软件工具，如 awk, grep, egrep, emacs 等（Emacs 不支持 POSIX 字符类, 排序序列和等值字符）；
+                        MySQL, Oracle 数据库（ Oracle 支持标准外的后向引用，从 <code>\1</code> 到 <code>\9</code>），PostgreSQL 7.3 及更早版本；
+                        PHP 的 <code>ereg</code> 函数，R 语言默认状态，Tcl 的扩展风味（Extended Regular
+                        Expressions），wxWidgets(<code>wxRE_EXTENDED</code>)。</td>
+                </tr>
+                <tr data-col="12">
+                    <th>GNU BRE</th>
+                    <td><a href="https://www.gnu.org/software/sed/manual/html_node/BRE-syntax.html">GNU 基本正则表达式（GNU
+                            Basic Regular Expressions）</a>, 包含 POSIX BRE 及 GNU 扩展。</td>
+                    <td>GNU 实现的经典 UNIX 工具，如 GNU/Linux 上的 sed 等。</td>
+                </tr>
+                <tr data-col="13">
+                    <th>GNU ERE</th>
+                    <td><a href="https://www.gnu.org/software/sed/manual/html_node/ERE-syntax.html">GNU
+                            扩展正则表达式（Extended Regular Expressions）</a>, 包含 POSIX ERE 及 GNU 扩展。</td>
+                    <td>GNU 实现的经典 UNIX 工具，如 GNU/Linux 上的 egrep, grep 等。</td>
+                </tr>
+                <tr data-col="14">
+                    <th>XML</th>
+                    <td>由 <a href="https://www.w3.org/TR/xmlschema11-2/#regexs">XML Schema 标准的附录 G</a>定义。</td>
+                    <td>XML Schema。</td>
+                </tr>
+                <tr data-col="15">
+                    <th>XPath</th>
+                    <td>由 XQuery 1.0 和 XPath 2.0 标准中的<a href="https://www.w3.org/TR/xquery-operators/#regex-syntax">函数与运算符章节</a>定义。</td>
+                    <td>XQuery, XPath。</td>
+                </tr>
+                <tr data-col="1">
+                    <th>JGsoft</th>
+                    <td>由 <a href="https://www.just-great-software.com/">Just Great Software</a> 产品使用的<a href="https://www.regular-expressions.info/jgsoft.html">正则表达式引擎</a>。 </td>
+                    <td>PowerGREP, EditPad Pro, AceText, RegexBuddy 等。</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>正则表达式引擎/风味特性对比表</h2>
+        <table id="diffs">
+            <tr>
+                <th colspan="16">字符</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\</code> 转义单个元字符</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\Q...\E</code> 转义多个元字符</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>Java 6</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\x00</code> ~ <code>\xFF</code> (ASCII 字符)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\n</code> (换行), <code>\r</code> (回车), <span class="code">\t (制表)</span></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\f</code> (换页), <code>\v</code> (竖直制表)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\a</code> (响铃)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\e</code> (转义)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\b</code> (退格), <code>\B</code> (反斜杠, <code>\</code>)</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\cA</code> ~ <code>\cZ</code> (控制字符)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\ca</code> ~ <code>\cz</code> (控制字符)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">字符类/字符集 <code>[abc]</code></th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>[abc]</code> 字符类</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>[^abc]</code> 反义字符类</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>[a-z]</code> 字符类范围</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>[\d-z]</code> 中的 <code>-</code> 视为字面量</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>[a-\d]</code> 中的 <code>-</code> 视为字面量</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\</code> 转义单个字符类元字符</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\Q...\E</code> 转义多个字符类元字符</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>Java 6</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\d</code> 代表数字</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>ascii</td>
+                <td>option</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\w</code> 代表单词字符</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>ascii</td>
+                <td>option</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\s</code> 代表空白字符</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td>option</td>
+                <td>ascii</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>ascii</td>
+            </tr>
+            <tr>
+                <td><code>\D</code>, <code>\W</code> and <span class="code">\S 代表反义字符类</span></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>[\b]</code> 匹配反斜杠(<code>\</code>)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">点</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>.</code> 匹配换行符(<code>\n</code>)外所有字符</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <th colspan="16">锚点</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>^</code> 字符串/行开始</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>$</code> 字符串/行结束</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\A</code> 字符串开始</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\Z</code> 字符串结束，最后一个\n前</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\z</code> 字符串结束</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td><code>\Z</code></td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\`</code> 字符串开始</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\'</code> 字符串结束</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">单词边界</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\b</code> 单词的开始或结束处</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>ascii</td>
+                <td>option</td>
+                <td>ascii</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\B</code> 不是单词的开始处或结束处</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td>ascii</td>
+                <td>option</td>
+                <td>ascii</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\y</code> 单词的开始或结束处</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\Y</code> 不是单词的开始处或结束处</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\m</code> 单词的开始处</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\M</code> 单词的结束处</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\&lt;</code> 单词的开始处</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\&gt;</code> 单词的结束处</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">分支条件</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>|</code> 分支条件</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>\|</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <th colspan="16">量词</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>?</code> 0 ~ 1 次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>\?</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>*</code> 0 次或更多次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>+</code> 1 次或更多次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>\+</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>{n}</code> n 次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>\{n\}</td>
+                <td>YES</td>
+                <td>\{n\}</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>{n,m}</code> n ~ m 次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>\{n,m\}</td>
+                <td>YES</td>
+                <td>\{n,m\}</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>{n,}</code> n 次或更多次</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>\{n,\}</td>
+                <td>YES</td>
+                <td>\{n,\}</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td>量词后加 <code>?</code> 转为懒惰模式</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <th colspan="16">分组与后向引用</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(regex)</code> 编号捕获组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>\( \)</td>
+                <td>YES</td>
+                <td>\( \)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>(?:regex)</code> 非捕获组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\1</code> ~ <code>\9</code> 后向引用</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\10</code> ~ <code>\99</code> 后向引用</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td>前向引用 <code>\1</code> through <code>\9</code></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td>嵌套引用 <code>\1</code> ~ <code>\9</code>
+                </td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td>后向引用不存在的组报错</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td>后向引用匹配失败的组失败</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <th colspan="16">修饰器</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?i)</code> 忽略大小写</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">/i only</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">flag</td>
+            </tr>
+            <tr>
+                <td><code>(?s)</code> 点(<code>.</code>)可匹配<code>\n</code></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>(?m)</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">flag</td>
+            </tr>
+            <tr>
+                <td><code>(?m)</code> 行开始/结束可匹配 <code>^</code> / <span class="code">$</span></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">/m only</td>
+                <td>YES</td>
+                <td class="no">always on</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">flag</td>
+            </tr>
+            <tr>
+                <td><code>(?x)</code> 忽略空白模式</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">flag</td>
+            </tr>
+            <tr>
+                <td><code>(?n)</code> 显式匹配</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?-ismxn)</code> 关闭模式修饰器</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?ismxn:group)</code> 模式修饰器仅应用于本组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">原子组与占位量词(possessive quantifiers)</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?>regex)</code> 原子组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>?+</code>, <code>*+</code>, <span class="code">++, <code>{m,n}+</code>
+                    占位量词</span></td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">断言</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?=regex)</code> 正预测先行断言</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?!regex)</code> 负预测先行断言</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?&lt;=text)</code> 正回顾后发断言</td>
+                <td>full regex</td>
+                <td>full regex</td>
+                <td>finite length</td>
+                <td>fixed length</td>
+                <td>fixed + alternation</td>
+                <td class="no">no</td>
+                <td>fixed length</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?&lt;!text)</code> 负回顾后发断言</td>
+                <td>full regex</td>
+                <td>full regex</td>
+                <td>finite length</td>
+                <td>fixed length</td>
+                <td>fixed + alternation</td>
+                <td class="no">no</td>
+                <td>fixed length</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">从上个匹配继续</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\G</code> 匹配尝试的开始</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">条件</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?(?=regex)then|else)</code> 使用任意断言</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?(regex)then|else)</code></td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?(1)then|else)</code></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?(group)then|else)</code></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">注释</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?#comment)</code></td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">忽略空白</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td>支持忽略空白语法</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td>字符类作为整体</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td># 开启注释</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">Unicode 字符</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\X</code> Unicode 字素</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\u0000</code> ~ <code>\uFFFF</code> (Unicode 字符)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>u"string"</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\x{0}</code> ~ <code>\x{FFFF}</code> (Unicode 字符)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">Unicode 属性, 脚本与区块</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\pL</code> ~ <code>\pC</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{L}</code> ~ <code>\p{C}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\p{Lu}</code> ~ <code>\p{Cn}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\p{L&amp;}</code>, <code>\p{Letter&amp;}</code> 等同于
+                    <code>[\p{Lu}\p{Ll}\p{Lt}]</code> Unicode 属性</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsL}</code> ~ <code>\p{IsC}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsLu}</code> ~ <code>\p{IsCn}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{Letter}</code> ~ <code>\p{Other}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{Lowercase_Letter}</code> ~ <code>\p{Not_Assigned}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsLetter}</code> ~ <code>\p{IsOther}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsLowercase_Letter}</code> ~ <code>\p{IsNot_Assigned}</code> (Unicode 属性)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{Arabic}</code> ~ <code>\p{Yi}</code> (Unicode 脚本)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsArabic}</code> ~ <code>\p{IsYi}</code> (Unicode 脚本)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{BasicLatin}</code> ~ <code>\p{Specials}</code> (Unicode 区块)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{InBasicLatin}</code> ~ <code>\p{InSpecials}</code> (Unicode 区块)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsBasicLatin}</code> ~ <code>\p{IsSpecials}</code> (Unicode 区块)</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td>上方 <code>{}</code> 中的内容忽略大小写</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td>上方语法中长名称允许空格，边字符，下划线 (如 <code>BasicLatin</code> 可写为 <code>Basic-Latin</code> 或
+                    <code>Basic_Latin</code> 或 <code>Basic Latin</code>)</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>Java 5</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\P</code> 上方所有 <code>\p</code> 的反义</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>\p{^...}</code> 上方所有 <code>\p{...}</code> 的反义</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>option</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <th colspan="16">命名捕获与后向引用</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>(?&lt;name&gt;regex)</code> .Net 风格的命名捕获分组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?'name'regex)</code> .Net 风格的命名捕获分组</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\k&lt;name&gt;</code> .Net 风格的命名后向引用</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\k'name'</code> .Net 风格的命名后向引用</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?P&lt;name&gt;regex)</code> Python 风格的命名捕获分组</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>(?P=name)</code> Python 风格的命名后向引用</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td>多个捕获组同名</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">no</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+                <td class="no">n/a</td>
+            </tr>
+            <tr>
+                <th colspan="16">XML 字符类</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>\i</code>, <code>\I</code>, <code>\c</code>, <code>\C</code> XML 名称字符类
+                </td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><code>[abc-[abc]]</code> 字符类差集</td>
+                <td>YES</td>
+                <td>2.0</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <th colspan="16">POSIX 方括号表达式</th>
+            </tr>
+            <tr>
+                <th>特性</th>
+                <th>JGsoft</th>
+                <th>.NET</th>
+                <th>Java</th>
+                <th>Perl</th>
+                <th>PCRE</th>
+                <th>JS</th>
+                <th>Python</th>
+                <th>Ruby</th>
+                <th>Tcl ARE</th>
+                <th>POSIX BRE</th>
+                <th>POSIX ERE</th>
+                <th>GNU BRE</th>
+                <th>GNU ERE</th>
+                <th>XML</th>
+                <th>XPath</th>
+            </tr>
+            <tr>
+                <td><code>[:alpha:]</code> POSIX 字符类</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>ascii</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{Alpha}</code> POSIX 字符类</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td>ascii</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>\p{IsAlpha}</code> POSIX 字符类</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>[.span-ll.]</code> POSIX 排序序列</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+            <tr>
+                <td><code>[=x=]</code> POSIX 等值字符</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td>YES</td>
+                <td class="no">no</td>
+                <td class="no">no</td>
+            </tr>
+        </table>
+
+    </article>
+
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            var diffs = $('#diffs');
+            var flavors = $('#flavors')
+
+            $('body').on('dblclick', function () {
+                $('.hilight').removeClass('hilight');
+            });
+
+            diffs.on('click', 'td:not(:nth-child(1)), th:not(:nth-child(1))', function () {
+                toggle($(this).index());
+            });
+
+            flavors.find('tbody tr').click(function () {
+                var index = $(this).data('col');
+                toggle(index);
+            });
+
+            function toggle(index) {
+                var exp = ':nth-child(' + (index + 1) + ')';
+                diffs.find('td' + exp + ', th' + exp).each(function () {
+                    $(this).toggleClass('hilight');
+                });
+                flavors.find('tbody tr').filter(function () {
+                    return $(this).data('col') == index;
+                }).toggleClass('hilight');
+            }
+        });
+    </script>
+</body>
+
+</html>

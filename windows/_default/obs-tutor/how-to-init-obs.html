@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>&#x5B89;&#x88C5;&#x4E0E;&#x521D;&#x59CB;&#x5316;obs</title>
+        <style>
+/* From extension marp-team.marp-vscode */
+#marp-vscode {
+  all: initial;
+}
+
+/* Override VS Code default CSS rules reverting to initial
+   https://github.com/microsoft/vscode/blob/master/src/vs/workbench/contrib/webview/browser/pre/main.js#L53 */
+body.marp-vscode {
+  padding: 0;
+}
+
+body.marp-vscode img {
+  max-width: unset;
+  max-height: unset;
+}
+
+body.marp-vscode a,
+body.marp-vscode a:hover,
+body.marp-vscode code {
+  color: unset;
+}
+
+body.marp-vscode blockquote {
+  background: unset;
+  border-color: unset;
+}
+
+@media screen {
+  body.marp-vscode {
+    overflow-y: scroll;
+  }
+
+  #marp-vscode svg[data-marpit-svg] {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    display: block;
+    margin: 20px;
+  }
+
+  #marp-vscode[data-polyfill] svg[data-marpit-svg] > foreignobject > section {
+    /* Workaround for wrong hit area caused by Chromium's rendering bug */
+    overflow: visible;
+  }
+
+  /* Based on https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+  #code-csp-warning {
+    background-color: #444;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 22px;
+    margin: 16px;
+    padding: 6px;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    word-wrap: break-word;
+  }
+
+  #code-csp-warning:hover {
+    text-decoration: none;
+    background-color: #007acc;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media print {
+  body.marp-vscode #code-csp-warning {
+    display: none;
+  }
+
+  #marp-vscode[data-polyfill] svg[data-marpit-svg] > foreignobject > section {
+    /* Disable WebKit polyfill */
+    transform: none !important;
+  }
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        <script type="text/javascript">
+/* From extension marp-team.marp-vscode */
+!function(){"use strict";var t,e=(function(t,e){Object.defineProperty(e,"__esModule",{value:!0});const r="marpitSVGPolyfill:setZoomFactor,",o=Symbol();let n,i;function l(t){const e="object"==typeof t&&t.target||document,l="object"==typeof t?t.zoom:t;window[o]||(Object.defineProperty(window,o,{configurable:!0,value:!0}),window.addEventListener("message",(({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(r)){const[,e]=t.split(","),r=Number.parseFloat(e);Number.isNaN(r)||(i=r)}}catch(t){console.error(t)}})));let a=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),(t=>{var e,r,o,s;t.style.transform||(t.style.transform="translateZ(0)");const c=l||i||t.currentScale||1;n!==c&&(n=c,a=c);const d=t.getBoundingClientRect(),{length:u}=t.children;for(let n=0;n<u;n+=1){const i=t.children[n],l=i.getScreenCTM();if(l){const t=null!==(r=null===(e=i.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==r?r:0,n=null!==(s=null===(o=i.y)||void 0===o?void 0:o.baseVal.value)&&void 0!==s?s:0,a=i.firstElementChild,{style:u}=a;u.transformOrigin||(u.transformOrigin=`${-t}px ${-n}px`),u.transform=`scale(${c}) matrix(${l.a}, ${l.b}, ${l.c}, ${l.d}, ${l.e-d.left}, ${l.f-d.top}) translateZ(0.0001px)`}}})),!1!==a&&Array.from(e.querySelectorAll("iframe"),(({contentWindow:t})=>{null==t||t.postMessage(`${r}${a}`,"null"===window.origin?"*":window.origin)}))}n=1,i=void 0;const a=(t,e,r)=>{if(t.getAttribute(e)!==r)return t.setAttribute(e,r),!0};function s({once:t=!1,target:e=document}={}){const r="Apple Computer, Inc."===navigator.vendor?[l]:[];let o=!t;const n=()=>{for(const t of r)t({target:e});!function(t=document){Array.from(t.querySelectorAll('svg[data-marp-fitting="svg"]'),(t=>{var e;const r=t.firstChild,o=r.firstChild,{scrollWidth:n,scrollHeight:i}=o;let l,s=1;if(t.hasAttribute("data-marp-fitting-code")&&(l=null===(e=t.parentElement)||void 0===e?void 0:e.parentElement),t.hasAttribute("data-marp-fitting-math")&&(l=t.parentElement),l){const t=getComputedStyle(l),e=Math.ceil(l.clientWidth-parseFloat(t.paddingLeft||"0")-parseFloat(t.paddingRight||"0"));e&&(s=e)}const c=Math.max(n,s),d=Math.max(i,1),u=`0 0 ${c} ${d}`;a(r,"width",`${c}`),a(r,"height",`${d}`),a(t,"preserveAspectRatio",getComputedStyle(t).getPropertyValue("--preserve-aspect-ratio")||"xMinYMin meet"),a(t,"viewBox",u)&&t.classList.toggle("__reflow__")}))}(e),o&&window.requestAnimationFrame(n)};return n(),()=>{o=!1}}const c=Symbol(),d=(t=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(t[c])return t[c];const e=s({target:t}),r=()=>{e(),delete t[c]};return Object.defineProperty(t,c,{configurable:!0,value:r}),r};e.browser=d,e.default=d,e.observer=s}(t={exports:{}},t.exports),t.exports);!function(){if(document.getElementById("marp-vscode")){document.body.classList.add("marp-vscode");const t=document.querySelectorAll("style:not(#marp-vscode-style):not(#_defaultStyles)"),r=document.querySelectorAll('link[rel="stylesheet"]:not([href*="marp-vscode"])');t.forEach((t=>t.remove())),r.forEach((t=>t.remove())),e.observer()}}()}();
+</script>
+
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="安装与初始化obs">安装与初始化obs</h1>
+<h2 id="下载obs">下载obs</h2>
+<p>链接：<a href="https://pc.qq.com/detail/0/detail_25840.html">https://pc.qq.com/detail/0/detail_25840.html</a></p>
+<h2 id="安装obs">安装obs</h2>
+<ol>
+<li>
+<p>如果出现以下提示，说明缺少运行obs的环境，按照以下步骤处理。如果没有遇到此提示，跳过这条继续下一条安装步骤。</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-47-54.png" alt="1"></p>
+<p>不要点击<code>yes</code>，退出obs安装程序，然后直接从下面的链接中下载环境的安装包（obs给的那个下载链接需要翻墙）。下载完成后点击此安装包，安装所需要的环境。安装结束后，再重新打开obs安装程序，按照下面的步骤安装obs</p>
+<p><a href="https://aka.ms/vs/16/release/vc_redist.x64.exe">https://aka.ms/vs/16/release/vc_redist.x64.exe</a></p>
+</li>
+<li>
+<p>务必记下自己obs的安装路径，确保自己能够找到（后续需要用）。如下图所示：</p>
+<blockquote>
+<p>我刚才给你安装的路径是：<code>D:/Program Files(x86)/obs-studio</code></p>
+</blockquote>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-22-16-50.png" alt="1"></p>
+</li>
+</ol>
+<h2 id="设置obs防止显示器捕获出现异常">设置obs，防止显示器捕获出现异常</h2>
+<ol>
+<li>
+<p>点击左下角的windows图标，然后点<code>设置</code></p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-35-46.png" alt="1"></p>
+</li>
+<li>
+<p>选择<code>系统</code></p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-36-56.png" alt="1"></p>
+</li>
+<li>
+<p>选择<code>显示</code>，然后右侧<strong>滑到最下面</strong>，点<code>图形设置</code></p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-38-11.png" alt="1"></p>
+</li>
+<li>
+<p>选择<code>浏览</code>，然后会打开一个文件管理器（第二张图）</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-39-38.png" alt="1"></p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-21-41-02.png" alt="1"></p>
+</li>
+<li>
+<p>在文件管理器中找到<code>obs.exe</code>文件的位置，并添加。此文件在安装路径下的<code>bin/64bit</code>文件夹中。</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-22-23-45.png" alt="1"></p>
+</li>
+<li>
+<p>点击<code>选项</code>，选择<code>节能</code>，保存退出。完成。</p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-22-25-04.png" alt="1"></p>
+<p><img src="https://myheap.coding.net/p/public-picture-bed-01/d/public-picture-bed-01/git/raw/master/2021-04-17-22-26-17.png" alt="1"></p>
+</li>
+</ol>
+
+    </body>
+    </html>

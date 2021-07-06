@@ -1,0 +1,13 @@
+{
+  "overrides": [
+    {
+      "files": [".prettierrc", "*.json", "*.jsonc"],
+      "options": { "parser": "json", "tabWidth": 2 }
+    },
+    {
+      "files": "*.md",
+      "options": { "parser": "markdown", "tabWidth": 4, "useTabs": false }
+    }
+  ]
+}
+
