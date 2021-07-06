@@ -487,6 +487,8 @@ https://vpn.wh.sdu.edu.cn
 
 ## zotero
 
+> 参考： https://zhuanlan.zhihu.com/p/268375930
+
 1. 设置数据文件夹位置
 
     ![image_2021-07-06-18-28-47](assets/05-package-configuration/image_2021-07-06-18-28-47.png)
