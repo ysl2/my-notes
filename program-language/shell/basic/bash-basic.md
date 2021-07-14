@@ -63,7 +63,14 @@
 
 1. tab & space
 
-    shell语法对tab和space敏感，不要用4个space代替tab
+    shell 语法对 tab 和 space 敏感，不要用 4 个 space 代替 tab
 
 1. 文本三件套：grep，sed，awk
 
+1. 用`type`测试某命令是否可用
+
+    ```bash
+    if ! type conda &>/dev/null; then
+      onconda
+    fi
+    ```
