@@ -108,3 +108,22 @@ s.intersection(                 s.union(
 s.intersection_update(          s.update(
 s.isdisjoint(
 ```
+
+## 指针与值
+
+1. 通过变量名，找其对应的地址
+
+    ```python
+    a = 5
+    # 使用内置函数`id()`
+    print(id(a))
+    ```
+
+2. 通过地址找值
+
+    ```python
+    # 接上例
+    import ctypes
+    value_of_a = ctypes.cast(id(a), ctypes.py_object).value
+    ```
+
