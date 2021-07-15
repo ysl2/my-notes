@@ -125,5 +125,6 @@ s.isdisjoint(
     # 接上例
     import ctypes
     value_of_a = ctypes.cast(id(a), ctypes.py_object).value
+    print(value_of_a)
     ```
 
