@@ -88,6 +88,8 @@ Guest 端（linux）需要安装下图的两个包。注意，在安装完之后
 
 ## virtualbox（不推荐，建议使用 gnome-boxes）
 
+### virtualbox安装
+
 Before installing virtualbox, you should run `cat /proc/version`to check your linux kernal version, then run `sudo pacman -S virtualbox` command and choose the virtualbox veision which fits your kernal version.
 
 ```bash
@@ -147,6 +149,22 @@ sudo sh /media/cdrom/VBoxLinuxAdditions.run
 可以把上述过程写成一个开机自启服务，或者直接修改 fstab 进行挂载。
 
 需要注意的是，最后的`sh VBoxLinuxAdditions.run`不要写在服务里，只需要写挂载的那部分就行了
+
+### virtualbox常用命令
+
+> 注意：不用加后面的`--type headless`，否则会导致虚拟机只是在后台运行，而没有界面。
+
+```bash
+VBoxManage list vms
+
+VBoxManage startvm "windows-7" --type headless
+
+VBoxManage controlvm "windows-7" pause --type headless
+
+VBoxManage controlvm "windows-7" resume --type headless
+
+VBoxManage controlvm "windows-7" poweroff --type headless
+```
 
 ## 学习 Java 过程中用到的相关工具
 
