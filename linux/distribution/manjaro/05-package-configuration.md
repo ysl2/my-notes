@@ -568,3 +568,14 @@ https://vpn.wh.sdu.edu.cn
 
     ![image_2021-07-06-18-38-02](assets/05-package-configuration/image_2021-07-06-18-38-02.png)
 
+## firefox
+
+关闭`从崩溃中恢复之前的会话`功能，这个功能如果开启会导致polybar的bug
+
+在firefox地址栏中输入`about:config`，然后搜索：
+
+```text
+# 把下面这个选项改成false
+browser.sessionstore.resume_from_crash = true
+```
+
