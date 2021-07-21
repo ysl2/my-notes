@@ -166,6 +166,14 @@ VBoxManage controlvm "windows-7" resume --type headless
 VBoxManage controlvm "windows-7" poweroff --type headless
 ```
 
+## virtualbox排错
+
+1. 不能为虚拟电脑 CentOS7 打开一个新任务.Failed to construct device usb-ehci instance #0...
+
+    > 参考：https://blog.csdn.net/qq_42993678/article/details/106885510
+
+    设置-usb设备-选择usb1.0 解决 …
+
 ## 学习 Java 过程中用到的相关工具
 
 见[vscode-with-java](../../ide/vscode-settings/_default/vscode-with-java.md)
