@@ -579,7 +579,7 @@ https://vpn.wh.sdu.edu.cn
 browser.sessionstore.resume_from_crash = true
 ```
 
-## 测试摄像头：cheese
+## 测试摄像头：cheese或者xawtv
 
 ```bash
 # 调用cheese
