@@ -1,9 +1,5 @@
 # My Notes
 
-<div align="center">
-<img src="https://latex.codecogs.com/svg.image?\int_{a}^{b}&space;x^2&space;dx" title="\int_{a}^{b} x^2 dx" />
-</div>
-
 ## 笔记在线浏览地址
 
 https://notes.orangex4.cool/?git=github&github=ysl2/my-notes
