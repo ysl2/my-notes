@@ -28,7 +28,7 @@
 
 -   `zo` 打开一个折叠。
 -   `zc` 关闭一个折叠。
--   `za` 当关闭时打开，当打开时关闭。
+-   `za`  当关闭时打开，当打开时关闭。
 -   `zo`、`zc`、`za`  对应  `zO`、`zC`  和  `zA`；以递归形式改变折叠状态。
 -   `zR` 打开全部折叠。
 -   `zM` 关闭全部折叠。
@@ -186,6 +186,18 @@ Pressing Escape in Multi-Cursor Visual Mode will bring you to Multi-Cursor Norma
 ```
 
 或者用插件，比如`fzf.vim`，参考[这里](https://github.com/junegunn/fzf.vim/issues/528)
+
+## g 配合其他按键
+
+-   `gj` `gk`: 折行时上下移动
+-   `g0` `g$`: 折行时移动到开头或结尾
+-   `gq`: 把折行变成分行
+-   `gu` `gU`: 把单词变成大写或者小写
+-   `~` `g~`: 切换大小写
+-   `gf`: 打开当前光标下单词所指的文件(比如`/etc/fstab`)
+-   `gv`: 重新选择上次选择的区域
+-   `gJ`: 合并行，不产生空格
+-   `g&`: 把上次执行的查找替换操作应用到整个文件
 
 ## 参考
 
