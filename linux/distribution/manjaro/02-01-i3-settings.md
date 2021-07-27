@@ -116,6 +116,9 @@ gui用`manjaro-settings-manager`
 
 需要通过`blueman-manager`设置开机默认打开蓝牙
 
+在第一次连接蓝牙耳机时会需要授权，此时直接在电脑里主动连接耳机就能连接上。连接上之后需要在蓝牙列表里设置为信任。否则下次连接还需要授权。
+
+
 ## 电池图标设置
 
 通过rofi打开`xfce4-power-manager`，然后会出现一个gui界面。打开`Syatem tray icon`
