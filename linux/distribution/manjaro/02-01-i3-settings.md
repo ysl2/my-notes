@@ -118,6 +118,7 @@ gui用`manjaro-settings-manager`
 
 在第一次连接蓝牙耳机时会需要授权，此时直接在电脑里主动连接耳机就能连接上。连接上之后需要在蓝牙列表里设置为信任。否则下次连接还需要授权。
 
+在连接键盘的时候最好通过命令行连接。参考：https://wiki.archlinux.org/title/Bluetooth_keyboard
 
 ## 电池图标设置
 
