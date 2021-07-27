@@ -114,11 +114,17 @@ gui用`manjaro-settings-manager`
 
 ## 蓝牙设置
 
+> 参考：
+>
+> - https://wiki.archlinux.org/title/Bluetooth_headset
+> - https://wiki.archlinux.org/title/Bluetooth_keyboard
+
+
 需要通过`blueman-manager`设置开机默认打开蓝牙
 
 在第一次连接蓝牙耳机时会需要授权，此时直接在电脑里主动连接耳机就能连接上。连接上之后需要在蓝牙列表里设置为信任。否则下次连接还需要授权。
 
-在连接键盘的时候最好通过命令行连接。参考：https://wiki.archlinux.org/title/Bluetooth_keyboard
+在连接键盘的时候最好通过命令行连接。参考上面的链接。
 
 ## 电池图标设置
 
