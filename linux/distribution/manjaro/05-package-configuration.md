@@ -599,6 +599,8 @@ cheese -d /dev/video1
 
 ## lightdm
 
+> 参考：https://wiki.archlinux.org/title/LightDM#Enabling_autologin
+
 不建议用这个，除非通过预装的方式（已经配置好）。其实如果预装的话还比较好用，就算难用也能配置免密登录。
 
 1. 编辑lightdm的配置文件，取消该行的注释，并添加要自动登录的用户名
@@ -613,7 +615,7 @@ cheese -d /dev/video1
 2. 你必须是`autologin`组的成员来使得自己登录时不用输入密码
 
     ```text
-    groupadd autologin
+    groupadd -r autologin
     gpasswd -a username autologin
     ```
 
