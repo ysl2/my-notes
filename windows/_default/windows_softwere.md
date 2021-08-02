@@ -8,3 +8,8 @@
 
 [轻聊版qq](http://link.zhihu.com/?target=http%3A//dldir1.qq.com/qqfile/qq/QQ7.9Light/14314/QQ7.9Light.exe)
 
+## MathType
+
+1. 打开Word后，提示“宏已被禁用”
+
+    文件——选项——信任中心——信任中心设置——宏设置——启动所有宏，再点确定即可
