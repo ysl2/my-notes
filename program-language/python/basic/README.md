@@ -128,3 +128,7 @@ s.isdisjoint(
     print(value_of_a)
     ```
 
+## 查看对象的所有属性
+
+参考：https://www.cnblogs.com/klchang/p/7296058.html
+
