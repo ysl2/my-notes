@@ -21,3 +21,8 @@
     > 注意：是 自动项目和符号列表 这一项，图里圈错了。
 
     ![1](assets/packages/images/2021-08-09-18-13-29.png)
+
+2. 关闭鼠标自动选择
+
+    ![1](assets/packages/images/image_2021-08-22-15-12-05.png)
+
