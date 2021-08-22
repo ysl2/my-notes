@@ -18,11 +18,17 @@
 
 1. 关闭自动标号(需要重启)
 
-    > 注意：是 自动项目和符号列表 这一项，图里圈错了。
+    **注意：是 自动项目和符号列表 这一项，图里圈错了。**
 
     ![1](assets/packages/images/2021-08-09-18-13-29.png)
 
 2. 关闭鼠标自动选择
 
     ![1](assets/packages/images/image_2021-08-22-15-12-05.png)
+
+3. 多行latex
+
+    注意下图中的`\begin{align}`和`\end{align}`
+
+    ![1](assets/packages/images/image_2021-08-22-15-14-26.png)
 
