@@ -26,9 +26,11 @@
 
     ![1](assets/packages/images/image_2021-08-22-15-12-05.png)
 
-3. 多行latex
+3. 通过MathType插件制作多行latex
 
     注意下图中的`\begin{align}`和`\end{align}`
 
     ![1](assets/packages/images/image_2021-08-22-15-14-26.png)
+
+4. 采用word内置的公式编辑器快捷键：`alt =`
 
