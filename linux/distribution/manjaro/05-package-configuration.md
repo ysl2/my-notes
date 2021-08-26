@@ -550,7 +550,7 @@ https://vpn.wh.sdu.edu.cn
 
     ![image_2021-07-06-18-34-58](assets/05-package-configuration/image_2021-07-06-18-34-58.png)
 
-1. 安装ZotFile插件
+1. 安装ZotFile插件(和其他插件)
 
     > 此插件的原地址（下载RELEASE）：https://github.com/jlegewie/zotfile
     >
@@ -575,6 +575,34 @@ https://vpn.wh.sdu.edu.cn
     密码可以直接使用zotero的，不要再新建了
 
     ![image_2021-07-06-18-38-02](assets/05-package-configuration/image_2021-07-06-18-38-02.png)
+
+1. zotero 与 notion 联动
+
+    - 配置zotero搜索引擎
+
+        在zotero的数据文件夹中，编辑`locate/engines.json`文件
+
+        把下面的代码按照json规则添加到文件中。位置任意，但位置最终会体现在zotero菜单中。注意如果加在最后，那么需要删掉逗号。
+
+        ```json
+        {
+            "_name": "notion",
+            "_alias": "notion",
+            "_description": "Zotero和notion联动，页面ID存在Call number（引用次数）字段",
+            "_icon": "https://www.notion.so/images/favicon.ico",
+            "_hidden": false,
+            "_urlTemplate": "https://www.notion.so/{z:callNumber}",
+            "_urlParams": [],
+            "_urlNamespaces": {
+                "z": "http://www.zotero.org/namespaces/openSearch#",
+                "": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "_iconSourceURI": "https://www.notion.so/images/favicon.ico"
+        },
+        ```
+
+    - 在zotero的Call number字段加入Notion链接。注意去掉域名，只留下后面的ysl2之后的部分(包括ysl2)
+    - Zotero选中文献，搜索引擎中点击Notion，打开网页版Notion笔记
 
 ## firefox
 
