@@ -647,3 +647,11 @@ cheese -d /dev/video1
     gpasswd -a username autologin
     ```
 
+## drawio
+
+1. 避免导出svg的bug
+
+    - 右键单击绘图画布的空白区域，然后从上下文菜单中选择“全选” 。
+    - 在格式面板的Text选项卡中，取消选中Word Wrap和Formatted Text。
+
+    ![1](assets/05-package-configuration/svg-export-remove-text-formatting.gif)
