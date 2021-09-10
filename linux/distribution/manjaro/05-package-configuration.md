@@ -528,28 +528,15 @@ https://vpn.wh.sdu.edu.cn
     > 特别注意可用的Sci-Hub域名有“http://sci-hub.st”，“http://sci-hub.do”（检测时间2020-11-04 20:33:23）。如果没有使用任何代理，由于网络环境问题，可能会有少部分从Sci-Hub下载的PDF出现损害的情况，这时你可以考虑将上述代码中的https改为http，或者更换其他可用的域名，情况可能会好转。
 
     ```text
-    # 多行，不要用这个，用下面那个单行的
-    {
-        "name":"Sci-Hub",
-        "method":"GET",
-        "url":"http://sci-hub.tw/{doi}",
-        "mode":"html",
-        "selector":"#pdf",
-        "attribute":"src",
-        "automatic":true
-    }
-    ```
-
-    ```text
     # 用这个单行的，可以直接复制进去
-    {    "name":"Sci-Hub",    "method":"GET",    "url":"http://sci-hub.tw/{doi}",    "mode":"html",    "selector":"#pdf",    "attribute":"src",    "automatic":true}
+        {     "name":"Sci-Hub",     "method":"GET",     "url":"https://sci-hubtw.hkvisa.net/{doi}",     "mode":"html",     "selector":"#pdf",     "attribute":"src",     "automatic":true }
     ```
     ![image_2021-07-06-18-34-31](assets/05-package-configuration/image_2021-07-06-18-34-31.png)
-
+    
     ![image_2021-07-06-18-34-47](assets/05-package-configuration/image_2021-07-06-18-34-47.png)
-
+    
     ![image_2021-07-06-18-34-58](assets/05-package-configuration/image_2021-07-06-18-34-58.png)
-
+    
 1. 安装ZotFile插件(和其他插件)
 
     > 此插件的原地址（下载RELEASE）：https://github.com/jlegewie/zotfile
