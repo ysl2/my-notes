@@ -12,3 +12,9 @@
 
 然后安装驱动（AMD）：https://www.amd.com/en/support/kb/release-notes/rn-rad-win-wsl-support
 
+## windows 上的 `ssh-copy-id` 命令替代品
+
+```powershell
+type $env:USERPROFILE\.ssh\id_rsa.pub | ssh yusoli@192.168.3.79 "cat >> .ssh/authorized_keys"
+```
+
