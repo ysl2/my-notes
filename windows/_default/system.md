@@ -18,3 +18,9 @@
 type $env:USERPROFILE\.ssh\id_rsa.pub | ssh yusoli@192.168.3.79 "cat >> .ssh/authorized_keys"
 ```
 
+## 删除在Linux系统下的保护文件
+
+```dos
+chkdsk /f 盘符:
+```
+

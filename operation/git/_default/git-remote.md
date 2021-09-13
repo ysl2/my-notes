@@ -90,3 +90,15 @@ ssh -T git@github.com
     # 我自己试了一下，并不管用
     git config branch.<branch-name>.remote no_push
     ```
+
+## 切换到指定远程分支
+
+> 参考：https://blog.csdn.net/astonishqft/article/details/83029490
+
+```bash
+# 查看所有分支
+git branch -a
+# 切换到特定远程分支
+git checkout -b windows origin//windows
+```
+
