@@ -1,5 +1,11 @@
 # System
 
+## 改键盘响应速度
+
+打开控制面板，搜索 键盘，点击“键盘”，进入键盘属性设置。也可以在运行中输入 control keyboard 直接打开。
+
+![1](G:\my-notes\windows\_default\assets\system\v2-8080ab8ae3fdba00ea47701c3e827793_b.jpg)
+
 ## 关闭系统提示音效
 
 控制面板 -> 声音 -> 把方案改成“无声”
