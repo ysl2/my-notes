@@ -24,3 +24,7 @@ type $env:USERPROFILE\.ssh\id_rsa.pub | ssh yusoli@192.168.3.79 "cat >> .ssh/aut
 chkdsk /f 盘符:
 ```
 
+## 关闭 Win + L 锁屏快捷键
+
+https://www.maketecheasier.com/disable-lock-screen-shortcut-key-windows/
+
