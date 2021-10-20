@@ -647,3 +647,5 @@ cheese -d /dev/video1
 
 > 参考：https://blog.csdn.net/weixin_41278720/article/details/81255265
 
+cuda 9.0：https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run
+
