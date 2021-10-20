@@ -214,7 +214,7 @@ unzip -O gb2312 xxx.zip
 
     ```text
     grnl-zsh-config
-
+    
     zoxide — cd
     tig — git
     firenvim — browser vim
@@ -642,3 +642,8 @@ cheese -d /dev/video1
     - 在格式面板的Text选项卡中，取消选中Word Wrap和Formatted Text。
 
     ![1](assets/05-package-configuration/svg-export-remove-text-formatting.gif)
+
+## 无root权限安装cuda
+
+> 参考：https://blog.csdn.net/weixin_41278720/article/details/81255265
+
