@@ -34,3 +34,8 @@ chkdsk /f 盘符:
 
 https://www.maketecheasier.com/disable-lock-screen-shortcut-key-windows/
 
+## 应用程序无法启动，因为应用程序的并行配置不正确，有关详细信息，请参阅应用程序时间日志，或使用命令行sxstrace.exe工具 
+
+> 参考：https://blog.csdn.net/weixin_45264991/article/details/105025753
+
+附件下载地址：https://www.microsoft.com/zh-cn/download/confirmation.aspx?id=10430
